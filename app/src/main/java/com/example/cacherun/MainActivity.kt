@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.ar.sceneform.ux.ArFragment
+import android.view.View
+import com.google.ar.core.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,15 +22,22 @@ class MainActivity : AppCompatActivity() {
 //    targetLocation.setLongitude(0.0d);
 //
 //    float distanceInMeters =  targetLocation.distanceTo(myLocation);
+//    hardCodedLocation = Location("")
+//        hardCodedLocation.latitude = 37.4
+//        hardCodedLocation.longitude = -122.0
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
     private lateinit var hardCodedLocation: Location
+    private lateinit var pointerDrawable: PointerDrawable
+
+    private lateinit var arFragement: ArFragment
 
     private var requestingLocationUpdates = false
-
+    private var isHitting = false
+    private var isTracking = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,29 +45,80 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        var tv: TextView = findViewById(R.id.temp_view)
-        var s = ""
-        var lat = ""
-        var lon = ""
+        arFragement = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
 
-        hardCodedLocation = Location("")
-        hardCodedLocation.latitude = 37.4
-        hardCodedLocation.longitude = -122.0
+        pointerDrawable = PointerDrawable()
 
+        arFragement.getArSceneView().getScene().addOnUpdateListener({ frameTime ->
+            arFragement.onUpdate(frameTime)
+            onUpdate()
+        })
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult?: return
                 for (location in locationResult.locations) {
-                    lat = location.latitude.toString()
-                    lon = location.longitude.toString()
-                    s = "$lat \t $lon"
-//                    tv.text = location.distanceTo(hardCodedLocation).toString()
-                    tv.text = s
+                    print("hello")
                 }
             }
         }
     }
+
+    private fun onUpdate() {
+        val hasTrackingChanged = updateTracking()
+        val contentView: View = findViewById(R.id.content)
+
+        if (hasTrackingChanged) {
+            contentView.overlay.add(pointerDrawable)
+        } else {
+            contentView.overlay.remove(pointerDrawable)
+        }
+
+        contentView.invalidate()
+
+        if (isTracking) {
+            val hitTestChanged = updateHitTest()
+            if (hitTestChanged) {
+                pointerDrawable.enabled = isHitting
+                contentView.invalidate()
+            }
+        }
+    }
+
+    private fun updateTracking(): Boolean {
+        var frame: Frame? = arFragement.arSceneView.arFrame
+        var wasTracking = isTracking
+
+        isTracking = ((frame != null) && (frame.camera.trackingState == TrackingState.TRACKING))
+
+        return isTracking == wasTracking
+    }
+
+    private fun updateHitTest(): Boolean {
+        var frame: Frame? = arFragement.arSceneView.arFrame
+        val centerPoint = getScreenCenter()
+        val hits: List<HitResult>
+        var wasHitting = isHitting
+        isHitting = false
+
+        if (frame != null) {
+            hits = frame.hitTest(centerPoint.x.toFloat(), centerPoint.y.toFloat())
+            for (hit in hits) {
+                var trackable = hit.trackable
+                if (trackable is Plane && (trackable).isPoseInPolygon(hit.hitPose)) {
+                    isHitting = true
+                    break
+                }
+            }
+        }
+        return wasHitting != isHitting
+    }
+
+    private fun getScreenCenter(): android.graphics.Point {
+        val view = findViewById<View>(android.R.id.content)
+        return android.graphics.Point(view.width / 2, view.height /2)
+    }
+
     override fun onStart() {
         super.onStart()
         if (!hasLocationPermissions())
@@ -122,13 +182,9 @@ class MainActivity : AppCompatActivity() {
         requestingLocationUpdates = true
     }
 
-
     fun hasLocationPermissions() = hasFineLocationPermission() && hasCoarseLocationPermissions()
     fun hasFineLocationPermission() = ActivityCompat.checkSelfPermission(
         this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     fun hasCoarseLocationPermissions() = ActivityCompat.checkSelfPermission(
         this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-
-
-
 }
