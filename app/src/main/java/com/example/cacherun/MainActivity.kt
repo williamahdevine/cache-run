@@ -2,6 +2,7 @@ package com.example.cacherun
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private var requestingLocationUpdates = false
     private var canSetModel = false
-    private var distanceThreshold = 100.0
+    private var distanceThreshold = 0.01
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,9 +88,7 @@ class MainActivity : AppCompatActivity() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
                 for (location in locationResult.locations) {
-                    debugLocation(location)
-                    checkIsInThreshold(location)
-
+                    getAddress()
                 }
             }
         }
@@ -105,20 +104,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkIsInThreshold(location: Location) {
         canSetModel = location.distanceTo(hardCodedLocation) <= distanceThreshold
+        if (canSetModel) {
+            in_thresh_button.setBackgroundColor(Color.GREEN)
+            in_thresh_button.text = "Tap Screen to Display Nearest Coupon"
+        } else {
+            in_thresh_button.setBackgroundColor(Color.RED)
+            in_thresh_button.text = "No Coupons in Range"
+        }
+
     }
 
     private fun doSetOnTapArPlaneListener() {
         arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
+            if (canSetModel) {
+                val anchor = hitResult.createAnchor()
+                val anchorNode = AnchorNode(anchor)
+                anchorNode.setParent(arFragment.arSceneView.scene)
 
-
-            val anchor = hitResult.createAnchor()
-            val anchorNode = AnchorNode(anchor)
-            anchorNode.setParent(arFragment.arSceneView.scene)
-
-            val piggy = TransformableNode(arFragment.transformationSystem)
-            piggy.setParent(anchorNode)
-            piggy.renderable = piggyRenderable
-            piggy.select()
+                val piggy = TransformableNode(arFragment.transformationSystem)
+                piggy.setParent(anchorNode)
+                piggy.renderable = piggyRenderable
+                piggy.select()
+            }
         }
     }
 
@@ -168,6 +175,8 @@ class MainActivity : AppCompatActivity() {
             if (location != null) {
                 createLocationRequest()
                 startLocationUpdates()
+//                debugLocation(location)
+                checkIsInThreshold(location)
             }
         }).addOnFailureListener(this) { e -> Log.w("getLastLocationFailure: onFailure", e)}
     }
