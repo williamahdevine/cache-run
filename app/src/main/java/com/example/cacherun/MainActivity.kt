@@ -19,20 +19,10 @@ import com.google.ar.core.*
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.TransformableNode
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-
-//    Location targetLocation = new Location("");//provider name is unnecessary
-//    targetLocation.setLatitude(0.0d);//your coords of course
-//    targetLocation.setLongitude(0.0d);
-//
-//    float distanceInMeters =  targetLocation.distanceTo(myLocation);
-//    hardCodedLocation = Location("")
-//        hardCodedLocation.latitude = 37.4
-//        hardCodedLocation.longitude = -122.0
-
-//    44.673497, -63.614482
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -42,58 +32,84 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pointerDrawable: PointerDrawable
     private lateinit var piggyRenderable: ModelRenderable
 
+    lateinit var deltaD: TextView
+    lateinit var curLatLon: TextView
+    lateinit var goalLatLon: TextView
+
     private lateinit var arFragment: ArFragment
 
     private var requestingLocationUpdates = false
+    private var canSetModel = false
+    private var distanceThreshold = 100.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var deltaD = findViewById<TextView>(R.id.delta_d)
-        var curLatLon = findViewById<TextView>(R.id.cur_latlon)
-        var goalLatLon = findViewById<TextView>(R.id.goal_latlon)
+        deltaD = findViewById(R.id.delta_d)
+        curLatLon = findViewById(R.id.cur_latlon)
+        goalLatLon = findViewById(R.id.goal_latlon)
 
         hardCodedLocation = Location("")
         hardCodedLocation.latitude = 44.673497
         hardCodedLocation.longitude = -63.614482
 
-
-
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         arFragment = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
 
+        buildModelRenderable()
+
+        doLocationCallback()
+
+        doSetOnTapArPlaneListener()
+    }
+
+    private fun buildModelRenderable() {
         ModelRenderable.builder()
             .setSource(this, R.raw.piggybank)
             .build()
-            .thenAccept{ renderable -> piggyRenderable = renderable }
+            .thenAccept { renderable -> piggyRenderable = renderable }
             .exceptionally { t: Throwable? ->
-                var toast = Toast.makeText(this, "Unable to load piggy renderable",
-                    Toast.LENGTH_LONG)
+                var toast = Toast.makeText(
+                    this, "Unable to load piggy renderable",
+                    Toast.LENGTH_LONG
+                )
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
                 null
 
             }
+    }
 
+    private fun doLocationCallback() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
-                locationResult?: return
+                locationResult ?: return
                 for (location in locationResult.locations) {
-                    deltaD.text = "Delta D: " + location.distanceTo(hardCodedLocation).toString()
-                    curLatLon.text = "Cur Loc: " + location.latitude + ",\t" + location.longitude
-                    goalLatLon.text = "Goal Loc: " + hardCodedLocation.latitude + ",\t" + hardCodedLocation.longitude
+                    debugLocation(location)
+                    checkIsInThreshold(location)
 
                 }
             }
         }
+    }
 
+    private fun debugLocation(location: Location) {
+        deltaD.text = "Delta D: " + location.distanceTo(hardCodedLocation).toString()
+        curLatLon.text = "Cur Loc: " + location.latitude + ",\t" + location.longitude
+        goalLatLon.text =
+            "Goal Loc: " + hardCodedLocation.latitude + ",\t" + hardCodedLocation.longitude
+        can_set_model.text = "Can Set: " + canSetModel.toString()
+    }
+
+    private fun checkIsInThreshold(location: Location) {
+        canSetModel = location.distanceTo(hardCodedLocation) <= distanceThreshold
+    }
+
+    private fun doSetOnTapArPlaneListener() {
         arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
-            if (piggyRenderable == null) {
-                // @TODO Do something
-            }
+
 
             val anchor = hitResult.createAnchor()
             val anchorNode = AnchorNode(anchor)
