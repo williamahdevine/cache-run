@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private var requestingLocationUpdates = false
     private var canSetModel = false
-    private var distanceThreshold = 0.01
+    private var distanceThreshold = 1000000.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
         goalLatLon = findViewById(R.id.goal_latlon)
 
         hardCodedLocation = Location("")
-        hardCodedLocation.latitude = 44.673497
-        hardCodedLocation.longitude = -63.614482
+        hardCodedLocation.latitude = 37.4219983
+        hardCodedLocation.longitude = -122.084
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -175,7 +175,7 @@ class MainActivity : AppCompatActivity() {
             if (location != null) {
                 createLocationRequest()
                 startLocationUpdates()
-//                debugLocation(location)
+                debugLocation(location)
                 checkIsInThreshold(location)
             }
         }).addOnFailureListener(this) { e -> Log.w("getLastLocationFailure: onFailure", e)}
