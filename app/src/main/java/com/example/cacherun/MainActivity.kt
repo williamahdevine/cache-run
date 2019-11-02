@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
 
     private var requestingLocationUpdates = false
     private var canSetModel = false
+
+    // Set this to a high number if you want to enable placing of "coupons"
+    // Set this to a low number if you want to disable placing of "coupons"
     private var distanceThreshold = 1000000.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         goalLatLon = findViewById(R.id.goal_latlon)
 
         hardCodedLocation = Location("")
+        // Place a pin in Google maps (from your web browser) near your current location
+        // Set this lat/lon equal, or close to, that pin's lat/lon
         hardCodedLocation.latitude = 37.4219983
         hardCodedLocation.longitude = -122.084
 
