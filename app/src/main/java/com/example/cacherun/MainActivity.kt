@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
     private lateinit var hardCodedLocation: Location
+    private lateinit var starbucksLocation: Location
     private lateinit var pointerDrawable: PointerDrawable
     private lateinit var piggyRenderable: ModelRenderable
 
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private var requestingLocationUpdates = false
     private var canSetModel = false
-    private var distanceThreshold = 0.01
+    private var distanceThreshold = 100.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +52,10 @@ class MainActivity : AppCompatActivity() {
         curLatLon = findViewById(R.id.cur_latlon)
         goalLatLon = findViewById(R.id.goal_latlon)
 
+
         hardCodedLocation = Location("")
-        hardCodedLocation.latitude = 44.673497
-        hardCodedLocation.longitude = -63.614482
+        hardCodedLocation.latitude = 44.646398
+        hardCodedLocation.longitude = -63.593183
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -175,7 +177,7 @@ class MainActivity : AppCompatActivity() {
             if (location != null) {
                 createLocationRequest()
                 startLocationUpdates()
-//                debugLocation(location)
+                debugLocation(location)
                 checkIsInThreshold(location)
             }
         }).addOnFailureListener(this) { e -> Log.w("getLastLocationFailure: onFailure", e)}
