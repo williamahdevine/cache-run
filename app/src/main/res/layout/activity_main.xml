@@ -29,15 +29,17 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_coupons" />
+        app:layout_constraintTop_toBottomOf="@+id/my_coupons"
+        app:layout_constraintVertical_bias="0.05" />
 
     <TextView
         android:id="@+id/cur_latlon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="30dp"
         android:text=""
         android:textColor="#F44336"
         android:textSize="18sp"
@@ -74,7 +76,9 @@
         app:layout_constraintBottom_toTopOf="@+id/goal_latlon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_coupons"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/in_thresh_button"

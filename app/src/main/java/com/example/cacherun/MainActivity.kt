@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
     private lateinit var hardCodedLocation: Location
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         hardCodedLocation.latitude = 44.636
         hardCodedLocation.longitude = -63.591
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         arFragment = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
 
@@ -166,14 +166,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         requestingLocationUpdates = false
     }
 
     private fun requestPermissions() {
         ActivityCompat.requestPermissions(
             this,
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION),
             REQUEST_PERMISSIONS_REQUEST_CODE)
     }
 
@@ -189,10 +189,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAddress() {
-        fusedLocationClient.lastLocation.addOnSuccessListener(this, OnSuccessListener { location ->
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener(this, OnSuccessListener { location ->
+            createLocationRequest()
+            startLocationUpdates()
             if (location != null) {
-                createLocationRequest()
-                startLocationUpdates()
                 debugLocation(location)
                 checkIsInThreshold(location)
             }
@@ -208,7 +208,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startLocationUpdates() {
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
         requestingLocationUpdates = true
     }
 
