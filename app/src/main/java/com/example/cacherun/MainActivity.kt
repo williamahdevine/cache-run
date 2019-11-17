@@ -30,9 +30,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
-    private lateinit var hardCodedLocation: Location
+    //private lateinit var hardCodedLocation: Location
     private lateinit var pointerDrawable: PointerDrawable
     private lateinit var piggyRenderable: ModelRenderable
+    private lateinit var pizzaRenderable: ModelRenderable
+    private lateinit var bookRenderable: ModelRenderable
+    val piggy= Coupon("piggy")
+    val pizza= Coupon("pizza")
+    val book= Coupon("book")
 
     lateinit var deltaD: TextView
     lateinit var curLatLon: TextView
@@ -50,22 +55,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        buildCoupons()
 
-        // display of locations for debugging
+        // display of locations for debugging purposes
         deltaD = findViewById(R.id.delta_d)
         curLatLon = findViewById(R.id.cur_latlon)
         goalLatLon = findViewById(R.id.goal_latlon)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
         arFragment = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
-
-        //coupon locations
-        hardCodedLocation = Location("")
-        hardCodedLocation.latitude = 44.636
-        hardCodedLocation.longitude = -63.591
-
-        buildModelRenderable()
 
         doLocationCallback()
 
@@ -73,7 +71,30 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun buildModelRenderable() {
+    //builds all coupons and places them appropriately
+    private fun buildCoupons() {
+        //makes all renderable models
+        makeRenderable()
+
+        //make all objects with rebderable models attached
+        //val piggy= Coupon("piggy")
+        piggy.hardCodedLocation.latitude= 44.636
+        piggy.hardCodedLocation.longitude = -63.591
+        piggy.Renderable= piggyRenderable
+
+//        val pizza= Coupon("pizza")
+        pizza.hardCodedLocation.latitude= 44.6362
+        pizza.hardCodedLocation.longitude = -63.5912
+        pizza.Renderable= pizzaRenderable
+
+//        val book= Coupon("book")
+        book.hardCodedLocation.latitude= 44.6363
+        book.hardCodedLocation.longitude = -63.5913
+        book.Renderable= bookRenderable
+    }
+
+    //takes all sfb files and builds renderable models
+    private fun makeRenderable(){
         ModelRenderable.builder()
             .setSource(this, R.raw.piggybank)
             .build()
@@ -81,6 +102,34 @@ class MainActivity : AppCompatActivity() {
             .exceptionally { t: Throwable? ->
                 var toast = Toast.makeText(
                     this, "Unable to load piggy renderable",
+                    Toast.LENGTH_LONG
+                )
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+                null
+            }
+
+        ModelRenderable.builder()
+            .setSource(this, R.raw.pepperoni_pizza)
+            .build()
+            .thenAccept { renderable -> pizzaRenderable = renderable }
+            .exceptionally { t: Throwable? ->
+                var toast = Toast.makeText(
+                    this, "Unable to load pizza renderable",
+                    Toast.LENGTH_LONG
+                )
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+                null
+            }
+
+        ModelRenderable.builder()
+            .setSource(this, R.raw.notebook)
+            .build()
+            .thenAccept { renderable -> bookRenderable = renderable }
+            .exceptionally { t: Throwable? ->
+                var toast = Toast.makeText(
+                    this, "Unable to load book renderable",
                     Toast.LENGTH_LONG
                 )
                 toast.setGravity(Gravity.CENTER, 0, 0)
@@ -110,16 +159,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //this is only looking at the piggy coupon!! && only for debug purposes rn
     private fun debugLocation(location: Location) {
-        deltaD.text = "Delta D: " + location.distanceTo(hardCodedLocation).toString()
+        deltaD.text = "Delta D: " + location.distanceTo(piggy.hardCodedLocation).toString()
         curLatLon.text = "Cur Loc: " + location.latitude + ",\t" + location.longitude
         goalLatLon.text =
-            "Goal Loc: " + hardCodedLocation.latitude + ",\t" + hardCodedLocation.longitude
+            "Goal Loc: " + piggy.hardCodedLocation.latitude + ",\t" + piggy.hardCodedLocation.longitude
         can_set_model.text = "Can Set: " + canSetModel.toString()
     }
 
+    //this is only checking the distance to piggy rn!!!!!*****
     private fun checkIsInThreshold(location: Location) {
-        canSetModel = location.distanceTo(hardCodedLocation) <= distanceThreshold
+        canSetModel = location.distanceTo(piggy.hardCodedLocation) <= distanceThreshold
             if (canSetModel) {
             in_thresh_button.setBackgroundColor(Color.GREEN)
             in_thresh_button.text = "Tap Screen to Display Nearest Coupon"
@@ -140,6 +191,16 @@ class MainActivity : AppCompatActivity() {
                 piggy.setParent(anchorNode)
                 piggy.renderable = piggyRenderable
                 piggy.select()
+
+                val pizza = TransformableNode(arFragment.transformationSystem)
+                pizza.setParent(anchorNode)
+                pizza.renderable = pizzaRenderable
+                pizza.select()
+
+                val book = TransformableNode(arFragment.transformationSystem)
+                book.setParent(anchorNode)
+                book.renderable = bookRenderable
+                book.select()
             }
         }
     }

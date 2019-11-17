@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.sceneform.rendering.ModelRenderable
 
 
-data class Coupon(
-    //set name to file name like this below
-   // @SerializedName("image_url")
-     var Renderable: ModelRenderable,
-     var hardCodedLocation: Location,
-     var isCollected :Boolean,
-     var isDisplayed :Boolean
-)
+data class Coupon( val name: String) {
+     //set name to file name like this below
+     // @SerializedName("image_url")
+     lateinit var Renderable: ModelRenderable
+     lateinit var hardCodedLocation: Location
+     var isCollected: Boolean? = null
+     var isDisplayed: Boolean? = null
+}
 
