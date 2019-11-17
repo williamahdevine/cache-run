@@ -45,26 +45,25 @@ class MainActivity : AppCompatActivity() {
 
     // Set this to a high number if you want to enable placing of "coupons"
     // Set this to a low number if you want to disable placing of "coupons"
-    private var distanceThreshold = 100000.0
+    private var distanceThreshold = 1000000.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // display of locations for debugging
         deltaD = findViewById(R.id.delta_d)
         curLatLon = findViewById(R.id.cur_latlon)
         goalLatLon = findViewById(R.id.goal_latlon)
 
-        //TODO: should we put coupon locations in the coupon class too
-        hardCodedLocation = Location("")
-        // Place a pin in Google maps (from your web browser) near your current location
-        // Set this lat/lon equal, or close to, that pin's lat/lon
-        hardCodedLocation.latitude = 44.636
-        hardCodedLocation.longitude = -63.591
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         arFragment = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
+
+        //coupon locations
+        hardCodedLocation = Location("")
+        hardCodedLocation.latitude = 44.636
+        hardCodedLocation.longitude = -63.591
 
         buildModelRenderable()
 
@@ -74,18 +73,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    //function set to be the onclick for the Available Coupons button
-    fun showAvailCoupons(view: View) {
-        // TODO: make coupon list visible here
-    }
-
-    //function set to be the onclick for the My Coupons button
-    fun showMyCoupons(view: View) {
-        // TODO: make coupon list visible here
-    }
-
-
-    //TODO: should we move this to the coupon class?
     private fun buildModelRenderable() {
         ModelRenderable.builder()
             .setSource(this, R.raw.piggybank)
@@ -100,6 +87,16 @@ class MainActivity : AppCompatActivity() {
                 toast.show()
                 null
             }
+    }
+
+    //function set to be the onclick for the Available Coupons button
+    fun showAvailCoupons(view: View) {
+        // TODO: make coupon list visible here
+    }
+
+    //function set to be the onclick for the My Coupons button
+    fun showMyCoupons(view: View) {
+        // TODO: make coupon list visible here
     }
 
     private fun doLocationCallback() {
