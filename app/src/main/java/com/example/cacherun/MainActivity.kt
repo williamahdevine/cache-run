@@ -55,11 +55,10 @@ class MainActivity : AppCompatActivity() {
         curLatLon = findViewById(R.id.cur_latlon)
         goalLatLon = findViewById(R.id.goal_latlon)
 
+        //TODO: should we put coupon locations in the coupon class too
         hardCodedLocation = Location("")
         // Place a pin in Google maps (from your web browser) near your current location
         // Set this lat/lon equal, or close to, that pin's lat/lon
-        // hardCodedLocation.latitude = 37.4219983
-        // hardCodedLocation.longitude = -122.084
         hardCodedLocation.latitude = 44.636
         hardCodedLocation.longitude = -63.591
 
@@ -85,6 +84,8 @@ class MainActivity : AppCompatActivity() {
         // TODO: make coupon list visible here
     }
 
+
+    //TODO: should we move this to the coupon class?
     private fun buildModelRenderable() {
         ModelRenderable.builder()
             .setSource(this, R.raw.piggybank)
@@ -122,7 +123,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkIsInThreshold(location: Location) {
         canSetModel = location.distanceTo(hardCodedLocation) <= distanceThreshold
-        if (canSetModel) {
+            if (canSetModel) {
             in_thresh_button.setBackgroundColor(Color.GREEN)
             in_thresh_button.text = "Tap Screen to Display Nearest Coupon"
         } else {
