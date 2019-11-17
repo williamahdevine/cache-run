@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='Cache Run'
+rootProject.name='horizontalRecyclerView'
