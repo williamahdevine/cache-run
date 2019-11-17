@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        buildCoupons()
 
         // display of locations for debugging purposes
         deltaD = findViewById(R.id.delta_d)
@@ -66,31 +65,31 @@ class MainActivity : AppCompatActivity() {
         arFragment = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
 
         doLocationCallback()
-
+        buildCoupons()
         doSetOnTapArPlaneListener()
 
     }
 
     //builds all coupons and places them appropriately
     private fun buildCoupons() {
+
         //makes all renderable models
         makeRenderable()
 
-        //make all objects with rebderable models attached
         //val piggy= Coupon("piggy")
         piggy.hardCodedLocation.latitude= 44.636
         piggy.hardCodedLocation.longitude = -63.591
-        piggy.Renderable= piggyRenderable
+       // piggy.Renderable= piggyRenderable
 
 //        val pizza= Coupon("pizza")
-        pizza.hardCodedLocation.latitude= 44.6362
-        pizza.hardCodedLocation.longitude = -63.5912
-        pizza.Renderable= pizzaRenderable
+        pizza.hardCodedLocation.latitude= 44.6365
+        pizza.hardCodedLocation.longitude = -63.592
+        //pizza.Renderable= pizzaRenderable
 
 //        val book= Coupon("book")
-        book.hardCodedLocation.latitude= 44.6363
-        book.hardCodedLocation.longitude = -63.5913
-        book.Renderable= bookRenderable
+        book.hardCodedLocation.latitude= 44.6369
+        book.hardCodedLocation.longitude = -63.593
+        //book.Renderable= bookRenderable
     }
 
     //takes all sfb files and builds renderable models
