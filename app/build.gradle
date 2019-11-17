@@ -30,19 +30,19 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:multidex:1.0.1'
-    implementation 'com.google.ar:core:1.12.0'
-    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.12.0'
-    implementation 'com.google.ar.sceneform:core:1.12.0'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.ar:core:1.13.0'
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.13.0'
+    implementation 'com.google.ar.sceneform:core:1.13.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation (name: 'wikitudesdk', ext:'aar')
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.gms:play-services-auth:15.0.1'
-    implementation 'com.google.android.gms:play-services-maps:16.1.0'
-    implementation "com.google.android.gms:play-services-location:15.0.1"
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation "com.google.android.gms:play-services-location:17.0.0"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -61,3 +61,18 @@ sceneform.asset('sampledata/piggy/piggybank.obj',
         'default',
         'sampledata/piggy/piggybank.sfa',
         'src/main/res/raw/piggybank')
+
+sceneform.asset('sampledata/nail polish/model.obj',
+        'default',
+        'sampledata/nail polish/model.sfa',
+        'src/main/assets/model')
+
+sceneform.asset('sampledata/Pizza/pepperoni pizza.obj',
+        'default',
+        'sampledata/Pizza/pepperoni pizza.sfa',
+        'src/main/res/raw/pepperoni pizza')
+
+sceneform.asset('sampledata/Book/CHAHIN_NOTEBOOK.obj',
+        'default',
+        'sampledata/Book/CHAHIN_NOTEBOOK.sfa',
+        'src/main/res/raw/CHAHIN_NOTEBOOK')

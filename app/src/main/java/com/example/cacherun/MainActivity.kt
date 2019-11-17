@@ -10,6 +10,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
+import android.view.View
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     // Set this to a high number if you want to enable placing of "coupons"
     // Set this to a low number if you want to disable placing of "coupons"
-    private var distanceThreshold = 1000000.0
+    private var distanceThreshold = 100000.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +58,10 @@ class MainActivity : AppCompatActivity() {
         hardCodedLocation = Location("")
         // Place a pin in Google maps (from your web browser) near your current location
         // Set this lat/lon equal, or close to, that pin's lat/lon
-        hardCodedLocation.latitude = 37.4219983
-        hardCodedLocation.longitude = -122.084
+        // hardCodedLocation.latitude = 37.4219983
+        // hardCodedLocation.longitude = -122.084
+        hardCodedLocation.latitude = 44.636
+        hardCodedLocation.longitude = -63.591
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -69,6 +72,17 @@ class MainActivity : AppCompatActivity() {
         doLocationCallback()
 
         doSetOnTapArPlaneListener()
+
+    }
+
+    //function set to be the onclick for the Available Coupons button
+    fun showAvailCoupons(view: View) {
+        // TODO: make coupon list visible here
+    }
+
+    //function set to be the onclick for the My Coupons button
+    fun showMyCoupons(view: View) {
+        // TODO: make coupon list visible here
     }
 
     private fun buildModelRenderable() {
@@ -84,7 +98,6 @@ class MainActivity : AppCompatActivity() {
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
                 null
-
             }
     }
 
@@ -116,7 +129,6 @@ class MainActivity : AppCompatActivity() {
             in_thresh_button.setBackgroundColor(Color.RED)
             in_thresh_button.text = "No Coupons in Range"
         }
-
     }
 
     private fun doSetOnTapArPlaneListener() {
