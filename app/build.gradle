@@ -62,17 +62,12 @@ sceneform.asset('sampledata/piggy/piggybank.obj',
         'sampledata/piggy/piggybank.sfa',
         'src/main/res/raw/piggybank')
 
-sceneform.asset('sampledata/nail polish/model.obj',
-        'default',
-        'sampledata/nail polish/model.sfa',
-        'src/main/assets/model')
-
-sceneform.asset('sampledata/Pizza/pepperoni pizza.obj',
-        'default',
-        'sampledata/Pizza/pepperoni pizza.sfa',
-        'src/main/res/raw/pepperoni pizza')
-
 sceneform.asset('sampledata/Book/CHAHIN_NOTEBOOK.obj',
         'default',
         'sampledata/Book/CHAHIN_NOTEBOOK.sfa',
-        'src/main/res/raw/CHAHIN_NOTEBOOK')
+        'src/main/res/raw/notebook')
+
+sceneform.asset('sampledata/pizza/pepperoni_pizza.obj',
+        'default',
+        'sampledata/pizza/pepperoni_pizza.sfa',
+        'src/main/res/raw/pepperoni_pizza')

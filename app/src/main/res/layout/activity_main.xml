@@ -28,6 +28,7 @@
         android:textColor="#F44336"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -40,6 +41,7 @@
         android:textColor="#F44336"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/delta_d"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -52,6 +54,7 @@
         android:textColor="#F44336"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/cur_latlon"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

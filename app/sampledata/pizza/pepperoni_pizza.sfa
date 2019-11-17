@@ -60,13 +60,13 @@
       'Orientation',
     ],
     collision: {},
-    file: 'sampledata/Pizza/pepperoni pizza.obj',
-    name: 'pepperoni pizza',
+    file: 'sampledata/pizza/pepperoni_pizza.obj',
+    name: 'pepperoni_pizza',
     recenter: 'root',
   },
   samplers: [
     {
-      file: 'sampledata/Pizza/pizzaTxt.png',
+      file: 'sampledata/pizza/pizzaTxt.png',
       name: 'pizzaTxt',
       pipeline_name: 'pizzaTxt.png',
     },
