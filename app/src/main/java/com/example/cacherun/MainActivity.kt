@@ -17,11 +17,14 @@ import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.ar.sceneform.ux.ArFragment
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.ar.core.*
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,9 +60,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // display of locations for debugging purposes
-        deltaD = findViewById(R.id.delta_d)
-        curLatLon = findViewById(R.id.cur_latlon)
-        goalLatLon = findViewById(R.id.goal_latlon)
+//        deltaD = findViewById(R.id.delta_d)
+//        curLatLon = findViewById(R.id.cur_latlon)
+//        goalLatLon = findViewById(R.id.goal_latlon)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         arFragment = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
@@ -67,6 +70,18 @@ class MainActivity : AppCompatActivity() {
         doLocationCallback()
         buildCoupons()
         doSetOnTapArPlaneListener()
+
+
+        /********************************/
+        val posts: ArrayList<String> = ArrayList()
+
+        for (i in 1..10) {
+            posts.add("Coupon # $i")
+        }
+
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        recyclerView.adapter = CouponAdapter(posts)
+        /********************************/
 
     }
 
@@ -160,11 +175,11 @@ class MainActivity : AppCompatActivity() {
 
     //this is only looking at the piggy coupon!! && only for debug purposes rn
     private fun debugLocation(location: Location) {
-        deltaD.text = "Delta D: " + location.distanceTo(piggy.hardCodedLocation).toString()
-        curLatLon.text = "Cur Loc: " + location.latitude + ",\t" + location.longitude
-        goalLatLon.text =
-            "Goal Loc: " + piggy.hardCodedLocation.latitude + ",\t" + piggy.hardCodedLocation.longitude
-        can_set_model.text = "Can Set: " + canSetModel.toString()
+//        deltaD.text = "Delta D: " + location.distanceTo(piggy.hardCodedLocation).toString()
+//        curLatLon.text = "Cur Loc: " + location.latitude + ",\t" + location.longitude
+//        goalLatLon.text =
+//            "Goal Loc: " + piggy.hardCodedLocation.latitude + ",\t" + piggy.hardCodedLocation.longitude
+//        can_set_model.text = "Can Set: " + canSetModel.toString()
     }
 
     //this is only checking the distance to piggy rn!!!!!*****

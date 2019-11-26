@@ -18,67 +18,67 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/delta_d"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="64dp"
-        android:text=""
-        android:textColor="#F44336"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_coupons"
-        app:layout_constraintVertical_bias="0.05" />
+<!--    <TextView-->
+<!--        android:id="@+id/delta_d"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginBottom="64dp"-->
+<!--        android:text=""-->
+<!--        android:textColor="#F44336"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.493"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/my_coupons"-->
+<!--        app:layout_constraintVertical_bias="0.05" />-->
 
-    <TextView
-        android:id="@+id/cur_latlon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="30dp"
-        android:text=""
-        android:textColor="#F44336"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.372"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avail_coupons"
-        app:layout_constraintVertical_bias="1.0" />
+<!--    <TextView-->
+<!--        android:id="@+id/cur_latlon"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginBottom="30dp"-->
+<!--        android:text=""-->
+<!--        android:textColor="#F44336"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.372"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/avail_coupons"-->
+<!--        app:layout_constraintVertical_bias="1.0" />-->
 
-    <TextView
-        android:id="@+id/goal_latlon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text=""
-        android:textColor="#F44336"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/cur_latlon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.627"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_coupons"
-        app:layout_constraintVertical_bias="1.0" />
+<!--    <TextView-->
+<!--        android:id="@+id/goal_latlon"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:text=""-->
+<!--        android:textColor="#F44336"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/cur_latlon"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.627"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/my_coupons"-->
+<!--        app:layout_constraintVertical_bias="1.0" />-->
 
-    <TextView
-        android:id="@+id/can_set_model"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text=""
-        android:textColor="#F44336"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/goal_latlon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_coupons"
-        app:layout_constraintVertical_bias="1.0" />
+<!--    <TextView-->
+<!--        android:id="@+id/can_set_model"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:text=""-->
+<!--        android:textColor="#F44336"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/goal_latlon"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.493"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/my_coupons"-->
+<!--        app:layout_constraintVertical_bias="1.0" />-->
 
     <Button
         android:id="@+id/in_thresh_button"
@@ -105,7 +105,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/in_thresh_button"
-        app:layout_constraintVertical_bias="0.787" />
+        app:layout_constraintVertical_bias="0.651" />
 
     <Button
         android:id="@+id/my_coupons"
@@ -118,6 +118,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/sceneform_fragment"
         app:layout_constraintEnd_toEndOf="@+id/sceneform_fragment"
         app:layout_constraintTop_toBottomOf="@+id/in_thresh_button"
-        app:layout_constraintVertical_bias="0.787" />
+        app:layout_constraintVertical_bias="0.651" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/avail_coupons" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
