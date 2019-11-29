@@ -24,7 +24,7 @@ import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_main.*
-
+import kotlin.math.round
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,26 +33,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
-    //private lateinit var hardCodedLocation: Location
     private lateinit var piggyRenderable: ModelRenderable
     private lateinit var pizzaRenderable: ModelRenderable
     private lateinit var bookRenderable: ModelRenderable
     var availableCouponList: MutableList<Coupon> = arrayListOf()
     var collectedCouponList: MutableList<Coupon> = arrayListOf()
+    var ishowingAvailOrCollectedCoupons = true
 
-    val piggyCoupon= Coupon("piggy")
-    val pizzaCoupon= Coupon("pizza")
-    val bookCoupon= Coupon("book")
+    val piggyCoupon= Coupon("General Store", R.drawable.piggypng)
+    val pizzaCoupon= Coupon("Pizza Place", R.drawable.pizzapng)
+    val bookCoupon= Coupon("Book Store", R.drawable.bookpng)
 
     private lateinit var arFragment: ArFragment
 
     private var requestingLocationUpdates = false
     private var canSetModel = false
-    private var hackyViewFix: View? = null
 
     // Set this to a high number if you want to enable placing of "coupons"
     // Set this to a low number if you want to disable placing of "coupons"
-    private var distanceThreshold = 1000000.0
+    private var distanceThreshold = 50.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,16 +72,16 @@ class MainActivity : AppCompatActivity() {
 
     //builds all coupons and places them appropriately
     private fun buildCoupons() {
-        piggyCoupon.hardCodedLocation.latitude= 44.646373
-        piggyCoupon.hardCodedLocation.longitude = -63.593466
+        piggyCoupon.hardCodedLocation.latitude= 44.673524
+        piggyCoupon.hardCodedLocation.longitude = -63.614440
         availableCouponList.add(piggyCoupon)
 
-        pizzaCoupon.hardCodedLocation.latitude= 44.6365
-        pizzaCoupon.hardCodedLocation.longitude = -63.592
+        pizzaCoupon.hardCodedLocation.latitude= 44.673524
+        pizzaCoupon.hardCodedLocation.longitude = -63.614440
         availableCouponList.add(pizzaCoupon)
 
-        bookCoupon.hardCodedLocation.latitude= 44.6369
-        bookCoupon.hardCodedLocation.longitude = -63.593
+        bookCoupon.hardCodedLocation.latitude= 44.673524
+        bookCoupon.hardCodedLocation.longitude = -63.614440
         availableCouponList.add(bookCoupon)
     }
 
@@ -133,12 +132,18 @@ class MainActivity : AppCompatActivity() {
 
     //function set to be the onclick for the Available Coupons button
     fun showAvailCoupons(view: View) {
-        val posts: ArrayList<String> = ArrayList()
+        val posts: ArrayList<Coupon> = ArrayList()
+        ishowingAvailOrCollectedCoupons = true
         findViewById<Button>(R.id.avail_coupons).setBackgroundColor(Color.GREEN)
         findViewById<Button>(R.id.my_coupons).setBackgroundColor(Color.GRAY)
 
         for (coupon in availableCouponList) {
-            posts.add("Coupon ${coupon.name}")
+            if (coupon.deltaD <= distanceThreshold){
+                posts.add(coupon)
+            } else {
+                posts.remove(coupon)
+            }
+
         }
 
         recyclerView.adapter = CouponAdapter(posts)
@@ -146,13 +151,14 @@ class MainActivity : AppCompatActivity() {
 
     //function set to be the onclick for the My Coupons button
     fun showCollectedCoupons(view: View) {
+        ishowingAvailOrCollectedCoupons = false
         findViewById<Button>(R.id.avail_coupons).setBackgroundColor(Color.GRAY)
         findViewById<Button>(R.id.my_coupons).setBackgroundColor(Color.GREEN)
-        val posts: ArrayList<String> = ArrayList()
+        val posts: ArrayList<Coupon> = ArrayList()
 
 
         for (coupon in collectedCouponList) {
-            posts.add("Coupon # ${coupon.name}")
+            posts.add(coupon)
         }
 
         recyclerView.adapter = CouponAdapter(posts)
@@ -170,38 +176,47 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkIsInThreshold(location: Location) {
-        canSetModel = location.distanceTo(piggyCoupon.hardCodedLocation) <= distanceThreshold
-            if (canSetModel) {
-            in_thresh_button.setBackgroundColor(Color.GREEN)
-            in_thresh_button.text = "Tap Screen to Display Nearest Coupon"
-        } else {
-            in_thresh_button.setBackgroundColor(Color.RED)
-            in_thresh_button.text = "No Coupons in Range"
+        var deltaD: Float
+
+        for (coupon in availableCouponList) {
+            deltaD = round(location.distanceTo(coupon.hardCodedLocation))
+            coupon.deltaD = deltaD
+            canSetModel = deltaD <= distanceThreshold
         }
+
+
+
     }
 
     private fun doSetOnTapArPlaneListener() {
         arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
-            if (canSetModel) {
-                val anchor = hitResult.createAnchor()
-                val anchorNode = AnchorNode(anchor)
-                anchorNode.setParent(arFragment.arSceneView.scene)
 
-                val piggy = TransformableNode(arFragment.transformationSystem)
-                piggy.setParent(anchorNode)
-                piggy.renderable = piggyRenderable
-                piggy.select()
+            val anchor = hitResult.createAnchor()
+            val anchorNode = AnchorNode(anchor)
+            anchorNode.setParent(arFragment.arSceneView.scene)
 
-//                val pizza = TransformableNode(arFragment.transformationSystem)
-//                pizza.setParent(anchorNode)
-//                pizza.renderable = pizzaRenderable
-//                pizza.select()
-//
-//                val book = TransformableNode(arFragment.transformationSystem)
-//                book.setParent(anchorNode)
-//                book.renderable = bookRenderable
-//                book.select()
+            for (coupon in availableCouponList) {
+                if (coupon.name == "General Store" && coupon.isSelected) {
+                    val piggy = TransformableNode(arFragment.transformationSystem)
+                    piggy.setParent(anchorNode)
+                    piggy.renderable = piggyRenderable
+                    piggy.select()
+                    coupon.isDisplayed = true
+                } else if (coupon.name.equals("Pizza Place") && coupon.isSelected) {
+                    val pizza = TransformableNode(arFragment.transformationSystem)
+                    pizza.setParent(anchorNode)
+                    pizza.renderable = pizzaRenderable
+                    pizza.select()
+                    coupon.isDisplayed = true
+                } else if (coupon.name.equals("Book Store") && coupon.isSelected){
+                    val book = TransformableNode(arFragment.transformationSystem)
+                    book.setParent(anchorNode)
+                    book.renderable = bookRenderable
+                    book.select()
+                    coupon.isDisplayed = true
+                }
             }
+
         }
     }
 
@@ -251,10 +266,19 @@ class MainActivity : AppCompatActivity() {
             createLocationRequest()
             startLocationUpdates()
             if (location != null) {
-//                debugLocation(location)
                 checkIsInThreshold(location)
+                if (ishowingAvailOrCollectedCoupons) {
+                    showAvailCoupons(this.recyclerView) // hack to update distance to coupon
+                }
             }
         }).addOnFailureListener(this) { e -> Log.w("getLastLocationFailure: onFailure", e)}
+    }
+
+    private fun updateCouponDistances() {
+        var deltaD: Float
+        for (coupon in availableCouponList){
+
+        }
     }
 
     private fun createLocationRequest() {

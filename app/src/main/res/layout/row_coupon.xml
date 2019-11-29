@@ -8,6 +8,14 @@
     android:layout_margin="12dp"
     app:cardBackgroundColor="#BA1D1D1D">
 
+
+    <ImageView
+        android:id="@+id/couponImage"
+        android:layout_width="match_parent"
+        android:layout_height="137dp"
+        android:padding="5dp"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
+
     <TextView
         android:id="@+id/firstName"
         android:layout_width="wrap_content"
@@ -19,11 +27,13 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="1dp" />
 
-    <ImageView
-        android:id="@+id/couponImage"
-        android:layout_width="match_parent"
-        android:layout_height="137dp"
-        android:padding="5dp"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+    <TextView
+        android:id="@+id/distanceToTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="170dp"
+        android:text="Defuault Text"
+        android:textColor="#FFFFFF" />
 
 </androidx.cardview.widget.CardView>

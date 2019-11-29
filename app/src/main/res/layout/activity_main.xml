@@ -18,84 +18,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/delta_d"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginBottom="64dp"-->
-<!--        android:text=""-->
-<!--        android:textColor="#F44336"-->
-<!--        android:textSize="18sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.493"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/my_coupons"-->
-<!--        app:layout_constraintVertical_bias="0.05" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/cur_latlon"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginBottom="30dp"-->
-<!--        android:text=""-->
-<!--        android:textColor="#F44336"-->
-<!--        android:textSize="18sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.372"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/avail_coupons"-->
-<!--        app:layout_constraintVertical_bias="1.0" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/goal_latlon"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:text=""-->
-<!--        android:textColor="#F44336"-->
-<!--        android:textSize="18sp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/cur_latlon"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.627"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/my_coupons"-->
-<!--        app:layout_constraintVertical_bias="1.0" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/can_set_model"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:text=""-->
-<!--        android:textColor="#F44336"-->
-<!--        android:textSize="18sp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/goal_latlon"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.493"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/my_coupons"-->
-<!--        app:layout_constraintVertical_bias="1.0" />-->
-
-    <Button
-        android:id="@+id/in_thresh_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:clickable="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sceneform_fragment" />
-
     <Button
         android:id="@+id/avail_coupons"
         android:layout_width="200dp"
         android:layout_height="48dp"
+        android:layout_marginTop="473dp"
         android:alpha="0.6"
         android:focusedByDefault="true"
         android:onClick="showAvailCoupons"
@@ -104,21 +31,23 @@
         app:layout_constraintEnd_toStartOf="@+id/my_coupons"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/in_thresh_button"
-        app:layout_constraintVertical_bias="0.651" />
+        app:layout_constraintTop_toTopOf="@+id/sceneform_fragment"
+        app:layout_constraintVertical_bias="0.195" />
 
     <Button
         android:id="@+id/my_coupons"
         android:layout_width="200dp"
         android:layout_height="48dp"
+        android:layout_marginTop="473dp"
+        android:layout_marginEnd="8dp"
         android:alpha="0.6"
         android:onClick="showCollectedCoupons"
         android:text="My Coupons"
         android:textIsSelectable="false"
         app:layout_constraintBottom_toBottomOf="@+id/sceneform_fragment"
         app:layout_constraintEnd_toEndOf="@+id/sceneform_fragment"
-        app:layout_constraintTop_toBottomOf="@+id/in_thresh_button"
-        app:layout_constraintVertical_bias="0.651" />
+        app:layout_constraintTop_toTopOf="@+id/sceneform_fragment"
+        app:layout_constraintVertical_bias="0.195" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -128,5 +57,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/avail_coupons" />
+
+    <Button
+        android:id="@+id/clip-coupon-btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="clip "
+        app:layout_constraintBottom_toTopOf="@+id/my_coupons"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
