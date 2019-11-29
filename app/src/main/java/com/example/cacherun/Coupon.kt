@@ -13,7 +13,9 @@ data class Coupon( val name: String) {
      // @SerializedName("image_url")
      lateinit var Renderable: ModelRenderable
      var hardCodedLocation = Location("")
-     var isCollected: Boolean? = null
-     var isDisplayed: Boolean? = null
+     var isCollected = false
+     var isDisplayed = false
+     var isInRange = false
+
 }
 

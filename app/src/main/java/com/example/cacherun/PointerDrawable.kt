@@ -22,8 +22,6 @@ class PointerDrawable: Drawable() {
             paint.setColor(Color.GRAY)
             canvas.drawText("X", cx, cy, paint)
         }
-
-//            .width/2
     }
 
 

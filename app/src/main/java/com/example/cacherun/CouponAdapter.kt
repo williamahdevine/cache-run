@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
+// TODO: Make this change posts to an array of coupons
 class CouponAdapter (val posts: ArrayList<String>) : RecyclerView.Adapter<CouponAdapter.ViewHolder>() {
 
     override fun getItemCount() = posts.size
@@ -18,7 +18,9 @@ class CouponAdapter (val posts: ArrayList<String>) : RecyclerView.Adapter<Coupon
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.firstName.text = posts[position]
+        // TODO: set holder.coupImage to posts[coupon.couponImage]
         holder.coupImg.setImageResource(R.drawable.coupon)
+        // TODO: Display coupon distance to
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
