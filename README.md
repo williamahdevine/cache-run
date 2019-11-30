@@ -96,15 +96,18 @@ Unfortunately, not much time was able to be dedicated to UI/UX polish.
 - Display hard-coded pins at a predetermined, hardcoded GPS location that are always visible to the user. (Completed)
 
 ### Expected Functionality
-- Replace pins with 3D coupon models
-- Calculate distance from user to coupon
-- Once user is within range of coupon, the coupon becomes visible
-- User can collect 
+- Replace pins with 3D coupon models (Completed)
+- Calculate distance from user to coupon (Completed)
+- Once user is within range of coupon, the coupon becomes visible (Completed)
+- User can collect displayed coupons
+- Coupons that have been collected are added to list of collected coupons (Completed)
+- Coupons that have been collected are removed from list of available coupons (Completed)
 
 ### Bonus Functionality
-- Feature 1 name (Completed)
-- Feature 2 name (Partially Completed)
-- Feature 3 (Not Implemented)
+- Create a list of coupons that have been coded to display at specific GPS locations (Completed)
+- Each coupon in the Available Coupons list displays that coupon's distance to the user (Completed)
+- The user must click on displayed coupon to collect it (Completed)
+- When coupons in the Collected Coupon list are clicked, that coupon's details are displayed (WIP)
 
 
 ## Code Examples
@@ -114,38 +117,57 @@ Share 2-3 'problems' that your team encountered.
 Write a few sentences that describe your solution and provide a code snippet/block
 that shows your solution. Example:
 
-**Problem 1: We needed to detect shake events**
+**Problem 1: Assigning Images to Coupons/their Cardview**
 
-A short description.
-```
-// The method we implemented that solved our problem
-public void onSensorChanged(SensorEvent event) {
-    now = event.timestamp;
-    x = event.values[0];
-    y = event.values[1];
-    z = event.values[2];
+The team found it difficult to conceptualize passing images from a coupon to the RecyclerView card corresponding to that coupon.
 
-    if (now - lastUpdate > 10) {
-        force = Math.abs(x + y + z - lastX - lastY - lastZ);
-        if (force > threshold) {
-            listener.onShake(force);
-        }
-        lastX = x;
-        lastY = y;
-        lastZ = z;
-        lastUpdate = now;
-    }
+```kotlin
+// We added an integer parameter to the Coupon class's constructor.
+// This integer is passed to the constructor using R.drawable.[NAME_OF_IMAGE]
+data class Coupon(var name: String, val imageId: Int) {
+    // {...}
 }
-
-// Source: StackOverflow [3]
 ```
+
+```kotlin
+// An array of coupons, called coupons, is passed to this class.
+// This coupons array is iterated through, and at each iteration 
+// the imageview associated with the current card of the RecylerView
+// is set to the current coupon's image
+override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    // {...}
+    holder.coupImg.setImageResource(coupons[position].imageId)
+    // {...}
+}
+```
+
+**Problem 2: Detecting when a user touches a displayed coupon (collecting a coupon)**
+
+Once the user had displayed a coupon, the team needed to devise a method to collect that coupon. To provide this functionality, a onTouchListener was added to each coupon everytime a coupon was placed. Within this onTouchListener, the anchor, which is the parent node of the coupon node, gets removed from the AR scence. It is within this onTouchListner where coupons are removed from/added to the Available Coupons or Collected Coupons view.
+
+```
+ADD CODE HERE 
+```
+
+
 
 ## Functional Decomposition
 
-A diagram and description of the application's primary functions and decomposition.
-[TODO: Identify and describe how this differs from High-level Organization.]
+**Coupon Model** 
+
+Using a data class, this model stores infornmation about each coupon object. 
+
+**Coupon Adaptor**
+
+Assembles the RecyclerView and its cards. An array of coupons are passed to the adaptor and cards are built with information from the coupon's model. 
+
+**AR and location logic**
+
+All of CacheRun's logic for location services and AR are present in the Main Activity; the team would like to do a major refactor time allowing. 
 
 ## High-level Organization
+
+<img src="images/hlo.jpg" alt="High Level Organization" width="300"/>
 
 The hierarchy or site map of the application.
 This can be reused from Updates 1 and 2, updated with any changes made since then.
