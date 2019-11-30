@@ -171,9 +171,15 @@ All of CacheRun's logic for location services and AR are present in the Main Act
 
 ## Clickstreams
 
-<img src="images/hlo.jpg" alt="High Level Organization" width="1000"/>
+<img src="images/cs1.png" alt="Clickstream" width="1000"/>
+<img src="images/cs2.png" alt="Clickstream" width="1000"/>
+<img src="images/cs3.png" alt="Clickstream" width="1000"/>
+<img src="images/cs4.png" alt="Clickstream" width="1000"/>
+
 
 ## Layout
+
+<img src="images/wireframe.PNG" alt="Wireframe" width="1000"/>
 
 Wire-frames of all the primary views and a brief description describing what each is for.
 This can be reused from Updates 1 and 2, updated with any changes made since then.
