@@ -206,6 +206,10 @@ Things Kyle used:
 - https://developers.google.com/ar/develop/java/quickstart
 - https://developers.google.com/ar/develop/java/sceneform
 - https://developers.google.com/maps/documentation/android-sdk/intro
+- Book Model: https://poly.google.com/view/4S1nr7WmUxm
+- Pizza Model: https://poly.google.com/view/cBF3cn9dz5p
+- Piggy Bank Model: https://poly.google.com/view/dpvS2kdW6I9
+
 
 Will:
 - That tutorial you followed for the recyclerview
