@@ -167,15 +167,11 @@ All of CacheRun's logic for location services and AR are present in the Main Act
 
 ## High-level Organization
 
-<img src="images/hlo.jpg" alt="High Level Organization" width="300"/>
-
-The hierarchy or site map of the application.
-This can be reused from Updates 1 and 2, updated with any changes made since then.
+<img src="images/hlo.jpg" alt="High Level Organization" width="1000"/>
 
 ## Clickstreams
 
-A brief description of the common use cases.
-This can be reused from Updates 1 and 2, updated with any changes made since then.
+<img src="images/hlo.jpg" alt="High Level Organization" width="1000"/>
 
 ## Layout
 
