@@ -1,5 +1,6 @@
+## Contents
 - [Cache Run](#cache-run)
-	- [The Team](#the-team)
+	- [Group Members](#group-members)
 	- [Description](#description)
 	- [Features](#features)
 	- [Libraries](#libraries)
@@ -13,10 +14,6 @@
     - [Functional Decomposition](#functional-decomposition)
     - [High-level Organization](#high-level-organization)
 	- [Clickstreams](#clickstreams)
-		- [Restaurant Detail Screen](#restaurant-detail-screen)
-		- [Coupon Sharing](#coupon-sharing)
-		- [View History](#view-history)
-		- [Logout Screen](#logout-screen)
 
 # CacheRun 
 
@@ -27,8 +24,8 @@ CacheRun is an immersive augment reality (AR) application that is a platform for
 | Name                   | Banner ID  | Email               |
 | ---------------------- | ---------- | ------------------- |
 | Kyle Burgess           | B00760561  | k.burgess@dal.ca    |
-| Serena Drouillard      | B00        | aa123456@dal.ca     |
-| Member 3               | B00123456  | aa123456@dal.ca     |
+| Serena Drouillard      | B00123456  | aa123456@dal.ca     |
+| William Devine         | B00123456  | aa123456@dal.ca     |
 
 ## Description
 
@@ -66,7 +63,7 @@ Coupons are leveraged by all age groups, however, the CacheRun team is aware tha
 
 ## Installation Notes
 
-Only the included apk is reuired to run
+Only the included apk is reuired to run.
 
 **Note:** The submitted version of CacheRun will feature coupons in the collection radius of the Goldberg Computer Science building. If testing/marking is performed elsewhere, [simply update the emulator's location](https://developer.android.com/studio/run/emulator#extended) or update the latitude and longitude of coupons in the code:
 
@@ -179,15 +176,7 @@ All of CacheRun's logic for location services and AR are present in the Main Act
 
 ## Layout
 
-<img src="images/wireframe.PNG" alt="Wireframe" width="1000"/>
-
-Wire-frames of all the primary views and a brief description describing what each is for.
-This can be reused from Updates 1 and 2, updated with any changes made since then.
-
-## Prototypes
-
-If you did low-fidelity or high-fidelity prototypes, document the process here,
-including the results of your user testing. (Otherwise, delete this section.)
+<img src="images/wireframe.png" alt="Wireframe" />
 
 ## Implementation
 
@@ -196,20 +185,30 @@ interactions the user performs on the screens.
 
 ## Future Work
 
-A discussion of how the implementation can be extended or improved if you had more
-time and inclination to do so.
+In order to have a complete application there would need to be more work; however, due to the time constraints of the academic semester not everything is able to be done.
+
+To make our application complete there are some key features that would need to be added. These features include, but are not limited to: Adding user accounts, Map view with coupon markers, Firebase integration, and coupon management for vendors.
+
+Adding the ability for users to create their account would enhance their experience by not needing to store all of their coupons to a single device. Accounts would allow the user to have their coupons regardless of which device they were on by linking them to their account. This would also allow for the integration of social media, which could be used share progression and analyse the users interest to better recommend coupons for them.
+
+Having a map view would increase the users experience by giving them a better sense of where to go to obtain coupons that are relevant to their likes. Currently the users do not have a method to view all of the coupons that are available, only the ones in their radius which can lead to the user wandering around looking for blindly for coupons. Having the map view would solve this dilemma and encourage the users to go capture new coupons.
+
+Integrating Firebase would resolve a few complications. For starters, Firebase could be used to store all of the data for coupons, vendors, users, and more. Storing data is a necessity for make this application usable on a large scale. If all of the data was stored locally, we would need to push out app updates too often which is just not efficient or reliable. Furthermore, Firebase has excellent build in user authentication, using OAuth2, which would negate the need for our team to manually encrypt passwords and authentication transmissions. 
+
+Finally, a feature that would aid vendors would be to provide them with a separate account type that would allow them to create a vendor profile and add coupons to their profile. These coupons would then be posted on the map and available for coupons users to collect. Having this feature would eliminate the developers as a middleman, where the vendors would need to send in coupons to be published.
+
 
 
 ## Sources
 
 Use IEEE citation style. Some examples:
+Things Kyle used:
+- https://developers.google.com/ar/develop/java/quickstart
+- https://developers.google.com/ar/develop/java/sceneform
+- https://developers.google.com/maps/documentation/android-sdk/intro
 
-[1] J. Moule, _Killer UX Design: Create User Experiences to Wow Your Visitors_. Sitepoint, 2012.
-
-[2] _Ngspice_. (2011). [Online]. Available: http://ngspice.sourceforge.net
-
-[3] "Detect shaking of device in left or right direction in android?", StackOverflow.
-    https://stackoverflow.com/a/6225656 (accessed July 12, 2019).
+Will:
+- That tutorial you followed for the recyclerview
 
 What to include in your project sources:
 - Stock images
