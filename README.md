@@ -29,7 +29,7 @@ CacheRun is an immersive augment reality (AR) application that is a platform for
 | ---------------------- | ---------- | ------------------------ |
 | Kyle Burgess           | B00760561  | k.burgess@dal.ca         |
 | Serena Drouillard      | B00705127  | serena.drouillard@dal.ca |
-| William Devine         | B00123456  | wl856147@dal.ca          |
+| William Devine         | B00738273  | wl856147@dal.ca          |
 
 ## Description
 
