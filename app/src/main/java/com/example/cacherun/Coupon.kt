@@ -11,7 +11,7 @@ import com.google.ar.sceneform.rendering.ModelRenderable
 data class Coupon(var name: String, val imageId: Int) {
     //set name to file name like this below
     // @SerializedName("image_url")
-    lateinit var Renderable: ModelRenderable
+    lateinit var renderable: ModelRenderable
     var hardCodedLocation = Location("")
     var isCollected = false
     var isDisplayed = false

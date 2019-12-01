@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.ar.core.*
 import com.google.ar.sceneform.AnchorNode
-import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,13 +36,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var piggyRenderable: ModelRenderable
     private lateinit var pizzaRenderable: ModelRenderable
     private lateinit var bookRenderable: ModelRenderable
-    var availableCouponList: MutableList<Coupon> = arrayListOf()
-    var collectedCouponList: MutableList<Coupon> = arrayListOf()
-    var isShowingAvailOrCollectedCoupons = true
+    private var availableCouponList: MutableList<Coupon> = arrayListOf()
+    private var collectedCouponList: MutableList<Coupon> = arrayListOf()
+    private var isShowingAvailOrCollectedCoupons = true
 
-    val piggyCoupon= Coupon("General Store", R.drawable.piggypng)
-    val pizzaCoupon= Coupon("Pizza Place", R.drawable.pizzapng)
-    val bookCoupon= Coupon("Book Store", R.drawable.bookpng)
+    private val piggyCoupon= Coupon("General Store", R.drawable.piggypng)
+    private val pizzaCoupon= Coupon("Pizza Place", R.drawable.pizzapng)
+    private val bookCoupon= Coupon("Book Store", R.drawable.bookpng)
 
     private lateinit var arFragment: ArFragment
 
@@ -68,7 +67,6 @@ class MainActivity : AppCompatActivity() {
         buildCoupons()
         doSetOnTapArPlaneListener()
         showAvailCoupons(this.recyclerView)
-
     }
 
     //builds all coupons and places them appropriately
@@ -133,20 +131,20 @@ class MainActivity : AppCompatActivity() {
 
     //function set to be the onclick for the Available Coupons button
     fun showAvailCoupons(view: View) {
-        val posts: ArrayList<Coupon> = ArrayList()
+        val couponList: ArrayList<Coupon> = ArrayList()
         isShowingAvailOrCollectedCoupons = true
         findViewById<Button>(R.id.avail_coupons).setBackgroundColor(Color.GREEN)
         findViewById<Button>(R.id.my_coupons).setBackgroundColor(Color.GRAY)
 
         for (coupon in availableCouponList) {
             if (coupon.deltaD <= distanceThreshold){
-                posts.add(coupon)
+                couponList.add(coupon)
             } else {
-                posts.remove(coupon)
+                couponList.remove(coupon)
             }
         }
 
-        recyclerView.adapter = CouponAdapter(posts)
+        recyclerView.adapter = CouponAdapter(couponList)
     }
 
     //function set to be the onclick for the My Coupons button
@@ -156,12 +154,10 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.my_coupons).setBackgroundColor(Color.GREEN)
         val posts: ArrayList<Coupon> = ArrayList()
 
-
         for (coupon in collectedCouponList) {
             if (coupon.isCollected) {
                 posts.add(coupon)
             }
-
         }
 
         recyclerView.adapter = CouponAdapter(posts)
@@ -186,9 +182,6 @@ class MainActivity : AppCompatActivity() {
             coupon.deltaD = deltaD
             canSetModel = deltaD <= distanceThreshold
         }
-
-
-
     }
 
     private fun doSetOnTapArPlaneListener() {
@@ -199,40 +192,24 @@ class MainActivity : AppCompatActivity() {
             anchorNode.setParent(arFragment.arSceneView.scene)
 
             for (coupon in availableCouponList) {
-                if (coupon.name == "General Store" && coupon.isSelected) {
-                    val piggy = TransformableNode(arFragment.transformationSystem)
-                    piggy.setParent(anchorNode)
-                    piggy.renderable = piggyRenderable
-                    piggy.select()
-                    coupon.isDisplayed = true
-                    piggy.setOnTouchListener { hitTestResult, motionEvent ->
-                        anchorNode.removeChild(piggy)
-                        collectCoupon(coupon)
-                        true
-                    }
+                val transformableNode = TransformableNode(arFragment.transformationSystem)
+                transformableNode.setParent(anchorNode)
 
-                } else if (coupon.name.equals("Pizza Place") && coupon.isSelected) {
-                    val pizza = TransformableNode(arFragment.transformationSystem)
-                    pizza.setParent(anchorNode)
-                    pizza.renderable = pizzaRenderable
-                    pizza.select()
-                    coupon.isDisplayed = true
-                    pizza.setOnTouchListener { hitTestResult, motionEvent ->
-                        anchorNode.removeChild(pizza)
-                        collectCoupon(coupon)
-                        true
+                if (coupon.isSelected) {
+                    transformableNode.renderable = when (coupon.name) {
+                        "General Store" -> piggyRenderable
+                        "Book Store" -> bookRenderable
+                        "Pizza Place" -> pizzaRenderable
+                        else -> null
                     }
-                } else if (coupon.name.equals("Book Store") && coupon.isSelected){
-                    val book = TransformableNode(arFragment.transformationSystem)
-                    book.setParent(anchorNode)
-                    book.renderable = bookRenderable
-                    book.select()
-                    coupon.isDisplayed = true
-                    book.setOnTouchListener { hitTestResult, motionEvent ->
-                        anchorNode.removeChild(book)
-                        collectCoupon(coupon)
-                        true
-                    }
+                }
+
+                transformableNode.select()
+                coupon.isDisplayed = true
+                transformableNode.setOnTouchListener { hitTestResult, motionEvent ->
+                    anchorNode.removeChild(transformableNode)
+                    collectCoupon(coupon)
+                    true
                 }
             }
         }
@@ -293,15 +270,6 @@ class MainActivity : AppCompatActivity() {
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
         requestingLocationUpdates = true
     }
-
-
-
-
-
-
-
-
-
 
 
     override fun onRequestPermissionsResult(
