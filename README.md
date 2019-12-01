@@ -14,6 +14,10 @@
     - [Functional Decomposition](#functional-decomposition)
     - [High-level Organization](#high-level-organization)
 	- [Clickstreams](#clickstreams)
+	- [Layout](#layout)
+	- [Implementation](#implementation)
+	- [Future Work](#future-work)
+	- [Sources](#Sources)
 
 # CacheRun 
 
