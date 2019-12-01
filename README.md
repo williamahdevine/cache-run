@@ -246,13 +246,6 @@ Finally, a feature that would aid vendors would be to provide them with a separa
 - https://www.youtube.com/watch?v=EFZkktBOFF8
 	"Android Kotlin Horizontal RecyclerView Tutorial" YouTube. [Online]. Available: https://www.youtube.com/watch?v=EFZkktBOFF8. [Accessed: 01-Dec-2019].
 
-What to include in your project sources:
-- Stock images
-- Design guides
-- Programming tutorials
-- Research material
-- Android libraries
-- Everything listed on the Dalhousie [*Plagiarism and Cheating*](https://www.dal.ca/dept/university_secretariat/academic-integrity/plagiarism-cheating.html)
 
 
 
