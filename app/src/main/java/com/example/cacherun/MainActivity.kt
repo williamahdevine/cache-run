@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     // Set this to a high number if you want to enable placing of "coupons"
     // Set this to a low number if you want to disable placing of "coupons"
-    private var distanceThreshold = 50.0
+    private var distanceThreshold = 150.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,16 +71,16 @@ class MainActivity : AppCompatActivity() {
 
     //builds all coupons and places them appropriately
     private fun buildCoupons() {
-        piggyCoupon.hardCodedLocation.latitude= 44.673524
-        piggyCoupon.hardCodedLocation.longitude = -63.614440
+        piggyCoupon.hardCodedLocation.latitude= 44.637440
+        piggyCoupon.hardCodedLocation.longitude = -63.587276
         availableCouponList.add(piggyCoupon)
 
-        pizzaCoupon.hardCodedLocation.latitude= 44.673524
-        pizzaCoupon.hardCodedLocation.longitude = -63.614440
+        pizzaCoupon.hardCodedLocation.latitude= 44.637430
+        pizzaCoupon.hardCodedLocation.longitude = -63.587266
         availableCouponList.add(pizzaCoupon)
 
-        bookCoupon.hardCodedLocation.latitude= 44.673524
-        bookCoupon.hardCodedLocation.longitude = -63.614440
+        bookCoupon.hardCodedLocation.latitude= 44.637410
+        bookCoupon.hardCodedLocation.longitude = -63.587296
         availableCouponList.add(bookCoupon)
     }
 
