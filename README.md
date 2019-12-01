@@ -53,9 +53,9 @@ Coupons are leveraged by all age groups, however, the CacheRun team is aware tha
 
 ## Libraries
 
-**[ARCore:](https://developers.google.com/ar/develop/java/quickstart)** ARCore is a software development kit developed by Google that allows for augmented reality applications to be built.
+**[ARCore:](https://developers.google.com/ar/develop/java/quickstart)** ARCore is a software development kit developed by Google that allows for augmented reality applications to be built. [1]
 
-**[Sceneform:](https://developers.google.com/ar/develop/java/sceneform/)** Sceneform makes it straightforward to render realistic 3D scenes in AR and non-AR apps, without having to learn OpenGL.
+**[Sceneform:](https://developers.google.com/ar/develop/java/sceneform/)** Sceneform makes it straightforward to render realistic 3D scenes in AR and non-AR apps, without having to learn OpenGL. [2]
 
 
 ## Requirements
@@ -235,20 +235,13 @@ Finally, a feature that would aid vendors would be to provide them with a separa
 
 ## Sources
 
-- https://developers.google.com/ar/develop/java/quickstart
-	“Quickstart for Android  |  ARCore  |  Google Developers,” Google. [Online]. Available: https://developers.google.com/ar/develop/java/quickstart. [Accessed: 01-Dec-2019].
-- https://developers.google.com/ar/develop/java/sceneform
-	“Sceneform overview  |  ARCore  |  Google Developers,” Google. [Online]. Available: https://developers.google.com/ar/develop/java/sceneform. [Accessed: 01-Dec-2019].
-- https://developers.google.com/maps/documentation/android-sdk/intro
-	Google. [Online]. Available: https://developers.google.com/maps/documentation/android-sdk/intro. [Accessed: 01-Dec-2019].
-- Book Model: https://poly.google.com/view/4S1nr7WmUxm
-	“Book,” Google. [Online]. Available: https://poly.google.com/view/4S1nr7WmUxm. [Accessed: 01-Dec-2019].
-- Pizza Model: https://poly.google.com/view/cBF3cn9dz5p
-	“Pepperoni pizza,” Google. [Online]. Available: https://poly.google.com/view/cBF3cn9dz5p. [Accessed: 01-Dec-2019].
-- Piggy Bank Model: https://poly.google.com/view/dpvS2kdW6I9
-	“Piggy bank,” Google. [Online]. Available: https://poly.google.com/view/dpvS2kdW6I9. [Accessed: 01-Dec-2019].
-- https://www.youtube.com/watch?v=EFZkktBOFF8
-	"Android Kotlin Horizontal RecyclerView Tutorial" YouTube. [Online]. Available: https://www.youtube.com/watch?v=EFZkktBOFF8. [Accessed: 01-Dec-2019].
+- [1] “Quickstart for Android  |  ARCore  |  Google Developers,” Google. [Online]. Available: https://developers.google.com/ar/develop/java/quickstart. [Accessed: 01-Dec-2019].
+- [2] “Sceneform overview  |  ARCore  |  Google Developers,” Google. [Online]. Available: https://developers.google.com/ar/develop/java/sceneform. [Accessed: 01-Dec-2019].
+- [3] "Google Maps," Google. [Online]. Available: https://developers.google.com/maps/documentation/android-sdk/intro. [Accessed: 01-Dec-2019].
+- [4] “Book,” Google. [Online]. Available: https://poly.google.com/view/4S1nr7WmUxm. [Accessed: 01-Dec-2019].
+- [5] “Pepperoni pizza,” Google. [Online]. Available: https://poly.google.com/view/cBF3cn9dz5p. [Accessed: 01-Dec-2019].
+- [6] “Piggy bank,” Google. [Online]. Available: https://poly.google.com/view/dpvS2kdW6I9. [Accessed: 01-Dec-2019].
+- [7] "Android Kotlin Horizontal RecyclerView Tutorial" YouTube. [Online]. Available: https://www.youtube.com/watch?v=EFZkktBOFF8. [Accessed: 01-Dec-2019].
 
 
 
