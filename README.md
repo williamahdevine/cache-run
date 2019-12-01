@@ -74,7 +74,7 @@ Coupons are leveraged by all age groups, however, the CacheRun team is aware tha
 	- [Configure the emulator to support Sceneform](https://developers.google.com/ar/develop/java/emulator#configure-emulator)
 	- [Update Google Play Services for AR](https://developers.google.com/ar/develop/java/emulator#update-arcore)
 
-**Note:** The submitted version of CacheRun will feature coupons in the collection radius of the Goldberg Computer Science building. If testing/marking is performed elsewhere, [simply update the emulator's location](https://developer.android.com/studio/run/emulator#extended) or update the latitude and longitude of coupons in the code:
+**Note:** The submitted version of CacheRun will feature coupons in the collection radius of the Goldberg Computer Science building. As such, please set your emulator's location to (44.637410, -63.587276) to accurately dipict that the app is 'being used at the Goldberg'. If testing/marking is performed elsewhere, [simply update the emulator's location](https://developer.android.com/studio/run/emulator#extended) or update the latitude and longitude of coupons in the code:
 
 ```kotlin
 private fun buildCoupons() {
