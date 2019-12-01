@@ -21,11 +21,11 @@ CacheRun is an immersive augment reality (AR) application that is a platform for
 
 ## Group members
 
-| Name                   | Banner ID  | Email               |
-| ---------------------- | ---------- | ------------------- |
-| Kyle Burgess           | B00760561  | k.burgess@dal.ca    |
-| Serena Drouillard      | B00123456  | aa123456@dal.ca     |
-| William Devine         | B00123456  | wl856147@dal.ca     |
+| Name                   | Banner ID  | Email                    |
+| ---------------------- | ---------- | ------------------------ |
+| Kyle Burgess           | B00760561  | k.burgess@dal.ca         |
+| Serena Drouillard      | B00705127  | serena.drouillard@dal.ca |
+| William Devine         | B00123456  | wl856147@dal.ca          |
 
 ## Description
 
@@ -231,8 +231,6 @@ Finally, a feature that would aid vendors would be to provide them with a separa
 
 ## Sources
 
-Use IEEE citation style. Some examples:
-Things Kyle used:
 - https://developers.google.com/ar/develop/java/quickstart
 	“Quickstart for Android  |  ARCore  |  Google Developers,” Google. [Online]. Available: https://developers.google.com/ar/develop/java/quickstart. [Accessed: 01-Dec-2019].
 - https://developers.google.com/ar/develop/java/sceneform
@@ -245,12 +243,8 @@ Things Kyle used:
 	“Pepperoni pizza,” Google. [Online]. Available: https://poly.google.com/view/cBF3cn9dz5p. [Accessed: 01-Dec-2019].
 - Piggy Bank Model: https://poly.google.com/view/dpvS2kdW6I9
 	“Piggy bank,” Google. [Online]. Available: https://poly.google.com/view/dpvS2kdW6I9. [Accessed: 01-Dec-2019].
-
-
-Will:
-- That tutorial you followed for the recyclerview
-	https://www.youtube.com/watch?v=EFZkktBOFF8
-		YouTube. [Online]. Available: https://www.youtube.com/watch?v=EFZkktBOFF8. [Accessed: 01-Dec-2019].
+- https://www.youtube.com/watch?v=EFZkktBOFF8
+	"Android Kotlin Horizontal RecyclerView Tutorial" YouTube. [Online]. Available: https://www.youtube.com/watch?v=EFZkktBOFF8. [Accessed: 01-Dec-2019].
 
 What to include in your project sources:
 - Stock images
