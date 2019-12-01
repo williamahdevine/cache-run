@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.ar.core.*
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bookRenderable: ModelRenderable
     var availableCouponList: MutableList<Coupon> = arrayListOf()
     var collectedCouponList: MutableList<Coupon> = arrayListOf()
-    var ishowingAvailOrCollectedCoupons = true
+    var isShowingAvailOrCollectedCoupons = true
 
     val piggyCoupon= Coupon("General Store", R.drawable.piggypng)
     val pizzaCoupon= Coupon("Pizza Place", R.drawable.pizzapng)
@@ -133,7 +134,7 @@ class MainActivity : AppCompatActivity() {
     //function set to be the onclick for the Available Coupons button
     fun showAvailCoupons(view: View) {
         val posts: ArrayList<Coupon> = ArrayList()
-        ishowingAvailOrCollectedCoupons = true
+        isShowingAvailOrCollectedCoupons = true
         findViewById<Button>(R.id.avail_coupons).setBackgroundColor(Color.GREEN)
         findViewById<Button>(R.id.my_coupons).setBackgroundColor(Color.GRAY)
 
@@ -143,7 +144,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 posts.remove(coupon)
             }
-
         }
 
         recyclerView.adapter = CouponAdapter(posts)
@@ -151,14 +151,17 @@ class MainActivity : AppCompatActivity() {
 
     //function set to be the onclick for the My Coupons button
     fun showCollectedCoupons(view: View) {
-        ishowingAvailOrCollectedCoupons = false
+        isShowingAvailOrCollectedCoupons = false
         findViewById<Button>(R.id.avail_coupons).setBackgroundColor(Color.GRAY)
         findViewById<Button>(R.id.my_coupons).setBackgroundColor(Color.GREEN)
         val posts: ArrayList<Coupon> = ArrayList()
 
 
         for (coupon in collectedCouponList) {
-            posts.add(coupon)
+            if (coupon.isCollected) {
+                posts.add(coupon)
+            }
+
         }
 
         recyclerView.adapter = CouponAdapter(posts)
@@ -202,21 +205,36 @@ class MainActivity : AppCompatActivity() {
                     piggy.renderable = piggyRenderable
                     piggy.select()
                     coupon.isDisplayed = true
+                    piggy.setOnTouchListener { hitTestResult, motionEvent ->
+                        anchorNode.removeChild(piggy)
+                        collectCoupon(coupon)
+                        true
+                    }
+
                 } else if (coupon.name.equals("Pizza Place") && coupon.isSelected) {
                     val pizza = TransformableNode(arFragment.transformationSystem)
                     pizza.setParent(anchorNode)
                     pizza.renderable = pizzaRenderable
                     pizza.select()
                     coupon.isDisplayed = true
+                    pizza.setOnTouchListener { hitTestResult, motionEvent ->
+                        anchorNode.removeChild(pizza)
+                        collectCoupon(coupon)
+                        true
+                    }
                 } else if (coupon.name.equals("Book Store") && coupon.isSelected){
                     val book = TransformableNode(arFragment.transformationSystem)
                     book.setParent(anchorNode)
                     book.renderable = bookRenderable
                     book.select()
                     coupon.isDisplayed = true
+                    book.setOnTouchListener { hitTestResult, motionEvent ->
+                        anchorNode.removeChild(book)
+                        collectCoupon(coupon)
+                        true
+                    }
                 }
             }
-
         }
     }
 
@@ -243,42 +261,24 @@ class MainActivity : AppCompatActivity() {
         requestingLocationUpdates = false
     }
 
-    private fun requestPermissions() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-            REQUEST_PERMISSIONS_REQUEST_CODE)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode != REQUEST_PERMISSIONS_REQUEST_CODE) return
-
-        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            getAddress()
-    }
-
     private fun getAddress() {
         fusedLocationProviderClient.lastLocation.addOnSuccessListener(this, OnSuccessListener { location ->
             createLocationRequest()
             startLocationUpdates()
             if (location != null) {
                 checkIsInThreshold(location)
-                if (ishowingAvailOrCollectedCoupons) {
+                if (isShowingAvailOrCollectedCoupons) {
                     showAvailCoupons(this.recyclerView) // hack to update distance to coupon
                 }
             }
         }).addOnFailureListener(this) { e -> Log.w("getLastLocationFailure: onFailure", e)}
     }
 
-    private fun updateCouponDistances() {
-        var deltaD: Float
-        for (coupon in availableCouponList){
-
-        }
+    private fun collectCoupon(coupon: Coupon) {
+        coupon.isDisplayed = false
+        coupon.isCollected = true
+        availableCouponList.remove(coupon)
+        collectedCouponList.add(coupon)
     }
 
     private fun createLocationRequest() {
@@ -292,6 +292,34 @@ class MainActivity : AppCompatActivity() {
     private fun startLocationUpdates() {
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
         requestingLocationUpdates = true
+    }
+
+
+
+
+
+
+
+
+
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode != REQUEST_PERMISSIONS_REQUEST_CODE) return
+
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            getAddress()
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+            REQUEST_PERMISSIONS_REQUEST_CODE)
     }
 
     private fun hasLocationPermissions() = hasFineLocationPermission() && hasCoarseLocationPermissions()

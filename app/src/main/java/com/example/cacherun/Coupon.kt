@@ -20,5 +20,6 @@ data class Coupon(var name: String, val imageId: Int) {
     var isSelected = false
 
 
+
 }
 
