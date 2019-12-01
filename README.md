@@ -142,8 +142,19 @@ override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 Once the user had displayed a coupon, the team needed to devise a method to collect that coupon. To provide this functionality, a onTouchListener was added to each coupon everytime a coupon was placed. Within this onTouchListener, the anchor, which is the parent node of the coupon node, gets removed from the AR scence. It is within this onTouchListner where coupons are removed from/added to the Available Coupons or Collected Coupons view.
 
-```
-ADD CODE HERE 
+```kotlin
+transformableNode.setOnTouchListener { hitTestResult, motionEvent ->
+	anchorNode.removeChild(transformableNode)
+	collectCoupon(coupon)
+	true
+}
+
+private fun collectCoupon(coupon: Coupon) {
+	coupon.isDisplayed = false
+	coupon.isCollected = true
+	availableCouponList.remove(coupon)
+	collectedCouponList.add(coupon)
+}
 ```
 
 
