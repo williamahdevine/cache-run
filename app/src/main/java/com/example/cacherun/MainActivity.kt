@@ -10,32 +10,39 @@ import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
-import android.widget.TextView
+import android.view.View
+import android.widget.Button
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.ar.sceneform.ux.ArFragment
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.ar.core.*
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.round
 
 
 class MainActivity : AppCompatActivity() {
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
-    private lateinit var hardCodedLocation: Location
-    private lateinit var pointerDrawable: PointerDrawable
     private lateinit var piggyRenderable: ModelRenderable
+    private lateinit var pizzaRenderable: ModelRenderable
+    private lateinit var bookRenderable: ModelRenderable
+    private var availableCouponList: MutableList<Coupon> = arrayListOf()
+    private var collectedCouponList: MutableList<Coupon> = arrayListOf()
+    private var isShowingAvailOrCollectedCoupons = true
 
-    lateinit var deltaD: TextView
-    lateinit var curLatLon: TextView
-    lateinit var goalLatLon: TextView
+    private val piggyCoupon= Coupon("General Store", R.drawable.piggypng)
+    private val pizzaCoupon= Coupon("Pizza Place", R.drawable.pizzapng)
+    private val bookCoupon= Coupon("Book Store", R.drawable.bookpng)
 
     private lateinit var arFragment: ArFragment
 
@@ -44,34 +51,41 @@ class MainActivity : AppCompatActivity() {
 
     // Set this to a high number if you want to enable placing of "coupons"
     // Set this to a low number if you want to disable placing of "coupons"
-    private var distanceThreshold = 1000000.0
+    private var distanceThreshold = 50.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        deltaD = findViewById(R.id.delta_d)
-        curLatLon = findViewById(R.id.cur_latlon)
-        goalLatLon = findViewById(R.id.goal_latlon)
-
-        hardCodedLocation = Location("")
-        // Place a pin in Google maps (from your web browser) near your current location
-        // Set this lat/lon equal, or close to, that pin's lat/lon
-        hardCodedLocation.latitude = 37.4219983
-        hardCodedLocation.longitude = -122.084
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         arFragment = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
 
-        buildModelRenderable()
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
 
         doLocationCallback()
-
+        makeRenderables()
+        buildCoupons()
         doSetOnTapArPlaneListener()
+        showAvailCoupons(this.recyclerView)
     }
 
-    private fun buildModelRenderable() {
+    //builds all coupons and places them appropriately
+    private fun buildCoupons() {
+        piggyCoupon.hardCodedLocation.latitude= 44.673524
+        piggyCoupon.hardCodedLocation.longitude = -63.614440
+        availableCouponList.add(piggyCoupon)
+
+        pizzaCoupon.hardCodedLocation.latitude= 44.673524
+        pizzaCoupon.hardCodedLocation.longitude = -63.614440
+        availableCouponList.add(pizzaCoupon)
+
+        bookCoupon.hardCodedLocation.latitude= 44.673524
+        bookCoupon.hardCodedLocation.longitude = -63.614440
+        availableCouponList.add(bookCoupon)
+    }
+
+    //takes all sfb files and builds renderable models
+    private fun makeRenderables(){
         ModelRenderable.builder()
             .setSource(this, R.raw.piggybank)
             .build()
@@ -84,8 +98,69 @@ class MainActivity : AppCompatActivity() {
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
                 null
-
             }
+
+        ModelRenderable.builder()
+            .setSource(this, R.raw.pepperoni_pizza)
+            .build()
+            .thenAccept { renderable -> pizzaRenderable = renderable }
+            .exceptionally { t: Throwable? ->
+                var toast = Toast.makeText(
+                    this, "Unable to load pizza renderable",
+                    Toast.LENGTH_LONG
+                )
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+                null
+            }
+
+        ModelRenderable.builder()
+            .setSource(this, R.raw.notebook)
+            .build()
+            .thenAccept { renderable -> bookRenderable = renderable }
+            .exceptionally { t: Throwable? ->
+                var toast = Toast.makeText(
+                    this, "Unable to load book renderable",
+                    Toast.LENGTH_LONG
+                )
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+                null
+            }
+    }
+
+    //function set to be the onclick for the Available Coupons button
+    fun showAvailCoupons(view: View) {
+        val couponList: ArrayList<Coupon> = ArrayList()
+        isShowingAvailOrCollectedCoupons = true
+        findViewById<Button>(R.id.avail_coupons).setBackgroundColor(Color.GREEN)
+        findViewById<Button>(R.id.my_coupons).setBackgroundColor(Color.GRAY)
+
+        for (coupon in availableCouponList) {
+            if (coupon.deltaD <= distanceThreshold){
+                couponList.add(coupon)
+            } else {
+                couponList.remove(coupon)
+            }
+        }
+
+        recyclerView.adapter = CouponAdapter(couponList)
+    }
+
+    //function set to be the onclick for the My Coupons button
+    fun showCollectedCoupons(view: View) {
+        isShowingAvailOrCollectedCoupons = false
+        findViewById<Button>(R.id.avail_coupons).setBackgroundColor(Color.GRAY)
+        findViewById<Button>(R.id.my_coupons).setBackgroundColor(Color.GREEN)
+        val couponList: ArrayList<Coupon> = ArrayList()
+
+        for (coupon in collectedCouponList) {
+            if (coupon.isCollected) {
+                couponList.add(coupon)
+            }
+        }
+
+        recyclerView.adapter = CouponAdapter(couponList)
     }
 
     private fun doLocationCallback() {
@@ -99,37 +174,43 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun debugLocation(location: Location) {
-        deltaD.text = "Delta D: " + location.distanceTo(hardCodedLocation).toString()
-        curLatLon.text = "Cur Loc: " + location.latitude + ",\t" + location.longitude
-        goalLatLon.text =
-            "Goal Loc: " + hardCodedLocation.latitude + ",\t" + hardCodedLocation.longitude
-        can_set_model.text = "Can Set: " + canSetModel.toString()
-    }
-
     private fun checkIsInThreshold(location: Location) {
-        canSetModel = location.distanceTo(hardCodedLocation) <= distanceThreshold
-        if (canSetModel) {
-            in_thresh_button.setBackgroundColor(Color.GREEN)
-            in_thresh_button.text = "Tap Screen to Display Nearest Coupon"
-        } else {
-            in_thresh_button.setBackgroundColor(Color.RED)
-            in_thresh_button.text = "No Coupons in Range"
-        }
+        var deltaD: Float
 
+        for (coupon in availableCouponList) {
+            deltaD = round(location.distanceTo(coupon.hardCodedLocation))
+            coupon.deltaD = deltaD
+            canSetModel = deltaD <= distanceThreshold
+        }
     }
 
     private fun doSetOnTapArPlaneListener() {
         arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
-            if (canSetModel) {
-                val anchor = hitResult.createAnchor()
-                val anchorNode = AnchorNode(anchor)
-                anchorNode.setParent(arFragment.arSceneView.scene)
 
-                val piggy = TransformableNode(arFragment.transformationSystem)
-                piggy.setParent(anchorNode)
-                piggy.renderable = piggyRenderable
-                piggy.select()
+            val anchor = hitResult.createAnchor()
+            val anchorNode = AnchorNode(anchor)
+            anchorNode.setParent(arFragment.arSceneView.scene)
+
+            for (coupon in availableCouponList) {
+                val transformableNode = TransformableNode(arFragment.transformationSystem)
+                transformableNode.setParent(anchorNode)
+
+                if (coupon.isSelected) {
+                    transformableNode.renderable = when (coupon.name) {
+                        "General Store" -> piggyRenderable
+                        "Book Store" -> bookRenderable
+                        "Pizza Place" -> pizzaRenderable
+                        else -> null
+                    }
+                }
+
+                transformableNode.select()
+                coupon.isDisplayed = true
+                transformableNode.setOnTouchListener { hitTestResult, motionEvent ->
+                    anchorNode.removeChild(transformableNode)
+                    collectCoupon(coupon)
+                    true
+                }
             }
         }
     }
@@ -153,16 +234,43 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         requestingLocationUpdates = false
     }
 
-    private fun requestPermissions() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
-            REQUEST_PERMISSIONS_REQUEST_CODE)
+    private fun getAddress() {
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener(this, OnSuccessListener { location ->
+            createLocationRequest()
+            startLocationUpdates()
+            if (location != null) {
+                checkIsInThreshold(location)
+                if (isShowingAvailOrCollectedCoupons) {
+                    showAvailCoupons(this.recyclerView) // hack to update distance to coupon
+                }
+            }
+        }).addOnFailureListener(this) { e -> Log.w("getLastLocationFailure: onFailure", e)}
     }
+
+    private fun collectCoupon(coupon: Coupon) {
+        coupon.isDisplayed = false
+        coupon.isCollected = true
+        availableCouponList.remove(coupon)
+        collectedCouponList.add(coupon)
+    }
+
+    private fun createLocationRequest() {
+        locationRequest = LocationRequest.create().apply {
+            interval = 10000
+            fastestInterval = 5000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+    }
+
+    private fun startLocationUpdates() {
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        requestingLocationUpdates = true
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -175,28 +283,11 @@ class MainActivity : AppCompatActivity() {
             getAddress()
     }
 
-    private fun getAddress() {
-        fusedLocationClient.lastLocation.addOnSuccessListener(this, OnSuccessListener { location ->
-            if (location != null) {
-                createLocationRequest()
-                startLocationUpdates()
-                debugLocation(location)
-                checkIsInThreshold(location)
-            }
-        }).addOnFailureListener(this) { e -> Log.w("getLastLocationFailure: onFailure", e)}
-    }
-
-    private fun createLocationRequest() {
-        locationRequest = LocationRequest.create().apply {
-            interval = 10000
-            fastestInterval = 5000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        }
-    }
-
-    private fun startLocationUpdates() {
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
-        requestingLocationUpdates = true
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+            REQUEST_PERMISSIONS_REQUEST_CODE)
     }
 
     private fun hasLocationPermissions() = hasFineLocationPermission() && hasCoarseLocationPermissions()

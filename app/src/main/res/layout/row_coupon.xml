@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--TODO: Add a field for distance to-->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="120dp"
+    android:layout_height="200dp"
+    android:layout_margin="12dp"
+    app:cardBackgroundColor="#BA1D1D1D">
+
+
+    <ImageView
+        android:id="@+id/couponImage"
+        android:layout_width="match_parent"
+        android:layout_height="137dp"
+        android:padding="5dp"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+    <TextView
+        android:id="@+id/couponName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="150dp"
+        android:text="Defuault Text"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="1dp" />
+
+    <TextView
+        android:id="@+id/distanceToTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="170dp"
+        android:text="Defuault Text"
+        android:textColor="#FFFFFF" />
+
+</androidx.cardview.widget.CardView>
