@@ -67,7 +67,12 @@ Coupons are leveraged by all age groups, however, the CacheRun team is aware tha
 
 ## Installation Notes
 
-Only the included apk is reuired to run.
+- Install the provided CacheRun APK.
+
+- To run on an emulator:
+	- [Create a virtual device with AR support](https://developers.google.com/ar/develop/java/emulator#create_a_virtual_device_with_ar_support)
+	- [Configure the emulator to support Sceneform](https://developers.google.com/ar/develop/java/emulator#configure-emulator)
+	- [Update Google Play Services for AR](https://developers.google.com/ar/develop/java/emulator#update-arcore)
 
 **Note:** The submitted version of CacheRun will feature coupons in the collection radius of the Goldberg Computer Science building. If testing/marking is performed elsewhere, [simply update the emulator's location](https://developer.android.com/studio/run/emulator#extended) or update the latitude and longitude of coupons in the code:
 
