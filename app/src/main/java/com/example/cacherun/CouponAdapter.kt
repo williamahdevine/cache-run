@@ -1,11 +1,13 @@
 package com.example.cacherun
 
+import android.app.Application
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class CouponAdapter (val couponList: ArrayList<Coupon>) : RecyclerView.Adapter<CouponAdapter.ViewHolder>() {
@@ -27,16 +29,11 @@ class CouponAdapter (val couponList: ArrayList<Coupon>) : RecyclerView.Adapter<C
             couponList[position].isSelected = true
             holder.itemView.setBackgroundColor(Color.GREEN)
         }
-
-
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val couponName: TextView = itemView.findViewById(R.id.couponName)
         val couponImage:ImageView = itemView.findViewById(R.id.couponImage)
         val deltaD: TextView = itemView.findViewById(R.id.distanceToTextView)
-
-
     }
-
 }

@@ -60,7 +60,6 @@ repositories {
     }
 }
 
-
 sceneform.asset('sampledata/piggy/piggybank.obj',
         'default',
         'sampledata/piggy/piggybank.sfa',
@@ -75,3 +74,4 @@ sceneform.asset('sampledata/pizza/pepperoni_pizza.obj',
         'default',
         'sampledata/pizza/pepperoni_pizza.sfa',
         'src/main/res/raw/pepperoni_pizza')
+

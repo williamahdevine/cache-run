@@ -152,15 +152,15 @@ class MainActivity : AppCompatActivity() {
         isShowingAvailOrCollectedCoupons = false
         findViewById<Button>(R.id.avail_coupons).setBackgroundColor(Color.GRAY)
         findViewById<Button>(R.id.my_coupons).setBackgroundColor(Color.GREEN)
-        val posts: ArrayList<Coupon> = ArrayList()
+        val couponList: ArrayList<Coupon> = ArrayList()
 
         for (coupon in collectedCouponList) {
             if (coupon.isCollected) {
-                posts.add(coupon)
+                couponList.add(coupon)
             }
         }
 
-        recyclerView.adapter = CouponAdapter(posts)
+        recyclerView.adapter = CouponAdapter(couponList)
     }
 
     private fun doLocationCallback() {
