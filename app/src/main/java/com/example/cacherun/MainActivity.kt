@@ -71,16 +71,16 @@ class MainActivity : AppCompatActivity() {
 
     //builds all coupons and places them appropriately
     private fun buildCoupons() {
-        piggyCoupon.hardCodedLocation.latitude= 44.673524
-        piggyCoupon.hardCodedLocation.longitude = -63.614440
+        piggyCoupon.hardCodedLocation.latitude= 44.637424
+        piggyCoupon.hardCodedLocation.longitude = -63.587254
         availableCouponList.add(piggyCoupon)
 
-        pizzaCoupon.hardCodedLocation.latitude= 44.673524
-        pizzaCoupon.hardCodedLocation.longitude = -63.614440
+        pizzaCoupon.hardCodedLocation.latitude= 44.637424
+        pizzaCoupon.hardCodedLocation.longitude = -63.587254
         availableCouponList.add(pizzaCoupon)
 
-        bookCoupon.hardCodedLocation.latitude= 44.673524
-        bookCoupon.hardCodedLocation.longitude = -63.614440
+        bookCoupon.hardCodedLocation.latitude= 44.637424
+        bookCoupon.hardCodedLocation.longitude = -63.587254
         availableCouponList.add(bookCoupon)
     }
 
