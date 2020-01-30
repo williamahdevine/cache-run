@@ -118,11 +118,6 @@ Unfortunately, not much time was able to be dedicated to UI/UX polish.
 
 ## Code Examples
 
-You will encounter roadblocks and problems while developing your project.
-Share 2-3 'problems' that your team encountered.
-Write a few sentences that describe your solution and provide a code snippet/block
-that shows your solution. Example:
-
 **Problem 1: Assigning Images to Coupons/their Cardview**
 
 The team found it difficult to conceptualize passing images from a coupon to the RecyclerView card corresponding to that coupon.
